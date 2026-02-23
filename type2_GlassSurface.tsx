@@ -1,8 +1,7 @@
-import React, { memo, Suspense } from 'react';
+import React, { memo } from 'react';
 import clsx from 'clsx';
 import './IconButton.css';
 import * as Icons from '../../icons/index';
-import Gradient from './Gradient.png';
 
 /* ----------------------------------
  * Types & Helpers
@@ -25,15 +24,95 @@ export interface IconButtonProps {
   type?: 'button' | 'submit' | 'reset';
 }
 
-const resolveIcon = (icon: IconButtonProps['icon']) => {
-  if (typeof icon === 'string') return Icons[icon];
+const resolveIcon = (
+  icon: IconButtonProps['icon']
+): React.ComponentType<React.SVGProps<SVGSVGElement>> | null => {
+  if (typeof icon === 'string') return Icons[icon] ?? null;
   return icon;
 };
 
 /* ----------------------------------
+ * Filter — render once at the app root via <IconButtonFilterDefs />
+ * ---------------------------------- */
+export const IconButtonFilterDefs: React.FC = () => (
+  <svg
+    className="filter"
+    xmlns="http://www.w3.org/2000/svg"
+    style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden' }}
+    aria-hidden
+  >
+    <defs>
+      <filter id="icon-button-filter" colorInterpolationFilters="sRGB">
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.65"
+          numOctaves="3"
+          stitchTiles="stitch"
+          result="map"
+        />
+        <feDisplacementMap
+          in="SourceGraphic"
+          in2="map"
+          id="redchannel"
+          xChannelSelector="R"
+          yChannelSelector="G"
+          result="dispRed"
+        />
+        <feColorMatrix
+          in="dispRed"
+          type="matrix"
+          values="1 0 0 0 0
+                  0 0 0 0 0
+                  0 0 0 0 0
+                  0 0 0 1 0"
+          result="red"
+        />
+        <feDisplacementMap
+          in="SourceGraphic"
+          in2="map"
+          id="greenchannel"
+          xChannelSelector="R"
+          yChannelSelector="G"
+          result="dispGreen"
+        />
+        <feColorMatrix
+          in="dispGreen"
+          type="matrix"
+          values="0 0 0 0 0
+                  0 1 0 0 0
+                  0 0 0 0 0
+                  0 0 0 1 0"
+          result="green"
+        />
+        <feDisplacementMap
+          in="SourceGraphic"
+          in2="map"
+          id="bluechannel"
+          xChannelSelector="R"
+          yChannelSelector="G"
+          result="dispBlue"
+        />
+        <feColorMatrix
+          in="dispBlue"
+          type="matrix"
+          values="0 0 0 0 0
+                  0 0 0 0 0
+                  0 0 1 0 0
+                  0 0 0 1 0"
+          result="blue"
+        />
+        <feBlend in="red" in2="green" mode="screen" result="rg" />
+        <feBlend in="rg" in2="blue" mode="screen" result="output" />
+        <feGaussianBlur in="output" stdDeviation="0.7" />
+      </filter>
+    </defs>
+  </svg>
+);
+
+/* ----------------------------------
  * Component
  * ---------------------------------- */
-export const IconButton: React.FC<IconButtonProps> = ({
+const IconButtonBase: React.FC<IconButtonProps> = ({
   icon,
   size = 'm',
   tone = 'default',
@@ -47,6 +126,8 @@ export const IconButton: React.FC<IconButtonProps> = ({
 }) => {
   const SvgIcon = resolveIcon(icon);
 
+  if (!SvgIcon) return null;
+
   const wrapperClasses = clsx(
     'icon-button',
     `icon-button--${size}`,
@@ -57,46 +138,29 @@ export const IconButton: React.FC<IconButtonProps> = ({
   );
 
   return (
-    <Suspense fallback={null}>
-      <svg width="0" height="0" style={{ position: 'absolute' }}>
-        <filter id="liquid-glass" primitiveUnits="objectBoundingBox" colorInterpolationFilters="sRGB">
-          <feImage href={Gradient} x="0" y="0" width="1" height="1" result="map" />
-          <feDisplacementMap in="SourceGraphic" in2="map" scale="0.10" xChannelSelector="R" yChannelSelector="B" result="dispRed" />
-          <feColorMatrix in="dispRed" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="red" />
-
-          <feDisplacementMap in="SourceGraphic" in2="map" scale="0.13" xChannelSelector="R" yChannelSelector="B" result="dispGreen" />
-          <feColorMatrix in="dispGreen" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="green" />
-
-          <feDisplacementMap in="SourceGraphic" in2="map" scale="0.16" xChannelSelector="R" yChannelSelector="B" result="dispBlue" />
-          <feColorMatrix in="dispBlue" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="blue" />
-
-          <feBlend in="red" in2="green" mode="screen" result="rg" />
-          <feBlend in="rg" in2="blue" mode="screen" result="output" />
-        </filter>
-      </svg>
-
-      <div className={wrapperClasses}>
-        <div className="icon-button__glass-outer">
-          <div className="icon-button__glass">
-            <button
-              className="icon-button__inner"
-              title={ariaLabel}
-              aria-label={ariaLabel}
-              disabled={disabled}
-              onClick={onClick}
-              type={type}
-            >
-              <span className="icon-button__glow" aria-hidden />
-              <span className="icon-button__icon">
-                <SvgIcon />
-              </span>
-            </button>
-          </div>
+    <div className={wrapperClasses}>
+      <div className="icon-button__glass-outer">
+        <div className="icon-button__glass">
+          <button
+            className="icon-button__inner"
+            title={ariaLabel}
+            aria-label={ariaLabel}
+            disabled={disabled}
+            onClick={onClick}
+            type={type}
+          >
+            <span className="icon-button__glow" aria-hidden />
+            <span className="icon-button__icon">
+              <SvgIcon />
+            </span>
+          </button>
         </div>
       </div>
-    </Suspense>
+    </div>
   );
 };
 
-IconButton.displayName = 'IconButton';
-export default memo(IconButton);
+IconButtonBase.displayName = 'IconButton';
+
+export const IconButton = memo(IconButtonBase);
+export default IconButton;
