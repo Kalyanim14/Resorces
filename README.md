@@ -1,48 +1,70 @@
-# Apple's Liquid Glass Button
- Implemented in HTML and tsx
-This repository contains 3 versions of Liquid Glass
-## glassButonBabel
-This folder contains liquid glass button implemented in Html, Css, Babel(Converts JS to older versions of JS)
-Can see by running the html file in folder
--> Clone the repository
--> Run HTML File
-## GlassButtonBabel.tsx
-This is a tsx component version of glassButtonBabel
-To run it you have to create a React or Next app with typescript
--> Create App using react or next
--> create a folder called components
--> create a file named GlassButtonBabel.tsx and place GlassButtonBabel.tsx code in it
--> Import it into the App.tsx
-Ex: usage
-`
+🍏 Apple’s Liquid Glass Button
+
+Implemented in HTML and TSX
+
+This repository contains three versions of the Liquid Glass Button.
+
+📁 1️⃣ glassButtonBabel
+
+This folder contains the Liquid Glass Button implemented using:
+
+HTML
+
+CSS
+
+Babel (converts modern JavaScript to older versions)
+
+▶ How to Run
+
+Clone the repository
+
+Navigate to the folder
+
+Run the HTML file directly in your browser
+
+📁 2️⃣ GlassButtonBabel.tsx
+
+This is the React + TypeScript (TSX) component version of glassButtonBabel.
+
+▶ How to Use
+
+Create a React or Next.js app with TypeScript
+
+Create a folder named components
+
+Create a file named GlassButtonBabel.tsx
+
+Paste the GlassButtonBabel.tsx code into the file
+
+Import it inside App.tsx
+
+💻 Example Usage
 import { GlassButtonBabel } from './GlassButtonBabel';
 
-export default App(){
+export default function App() {
   return (
     <>
-  <GlassButtonBabel size={16} mode="bubble"/>
-  <GlassButtonBabel size={20} mode="bubble"/>
-  <GlassButtonBabel size={24} mode="bubble"/>
-  <GlassButtonBabel size={36} mode="bubble"/>
-  <GlassButtonBabel size={36} mode="bubble"/>
-  <GlassButtonBabel mode="dock"/>
-  <GlassButtonBabel mode="pill"/>
+      <GlassButtonBabel size={16} mode="bubble" />
+      <GlassButtonBabel size={20} mode="bubble" />
+      <GlassButtonBabel size={24} mode="bubble" />
+      <GlassButtonBabel size={36} mode="bubble" />
+      <GlassButtonBabel size={36} mode="bubble" />
+      <GlassButtonBabel mode="dock" />
+      <GlassButtonBabel mode="pill" />
     </>
-  )
+  );
 }
-`
-## Index2_Another_type.html
+📁 3️⃣ Index2_Another_type.html
 
-Another Type of liquid glass
-usage:
-->clone the repository
--> run the Index2_Another_type.html file
+Another variation of the Liquid Glass button.
 
-Original creadits of GlassButtonBabel credit goes to `https://frontendmasters.com/blog/liquid-glass-on-the-web/`
--
+▶ How to Use
 
+Clone the repository
 
+Run the Index2_Another_type.html file
 
+🎖 Credits
 
-https://github.com/user-attachments/assets/e588951d-4033-48d8-9d69-ba618272fae0
-
+Original credit for GlassButtonBabel goes to:
+https://frontendmasters.com/blog/liquid-glass-on-the-web/
