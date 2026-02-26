@@ -43,9 +43,9 @@ TypeScript + React component version of the Liquid Glass button.
 
 Create a React or Next.js app with TypeScript:
 
-npx create-react-app my-app --template typescript
-# or
-npx create-next-app@latest
+`npx create-react-app my-app --template typescript`
+ or
+`npx create-next-app@latest`
 
 Inside your project, create a folder:
 
@@ -53,7 +53,7 @@ Inside your project, create a folder:
 
 Create a file:
 
-GlassButtonBabel.tsx
+### GlassButtonBabel.tsx
 
 Paste the component code inside it.
 
