@@ -65,14 +65,14 @@ import { GlassButtonBabel } from "./components/GlassButtonBabel";
 
 export default function App() {
   return (
-    <>
+    <div>
       <GlassButtonBabel size={16} mode="bubble" />
       <GlassButtonBabel size={20} mode="bubble" />
       <GlassButtonBabel size={24} mode="bubble" />
       <GlassButtonBabel size={36} mode="bubble" />
       <GlassButtonBabel mode="dock" />
       <GlassButtonBabel mode="pill" />
-    </>
+    </div>
   );
 }
 ``` </pre>
@@ -88,27 +88,12 @@ Open Index2_Another_type.html in your browser
 
 ### ✨ Modes Available
 
-bubble
-
-dock
-
-pill
-
+bubble, dock, pill
 Each mode provides a different liquid glass surface style.
 
 ### 🛠 Tech Used
 
-HTML5
-
-CSS3 (Glassmorphism + Blur Effects)
-
-JavaScript
-
-Babel
-
-React
-
-TypeScript
+HTML5, CSS3 (Glassmorphism + Blur Effects), JavaScript, Babel, React, TypeScript
 
 ## 🎖 Credits
 
